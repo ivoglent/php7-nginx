@@ -16,7 +16,7 @@ cp /etc/nginx/conf.d/site.conf.tpl /etc/nginx/conf.d/site.conf
 sed -i "s|SERVER_NAME|$SERVER_NAME|g" /etc/nginx/conf.d/site.conf
 sed -i "s|ROOT_PATH|$ROOT_PATH|g" /etc/nginx/conf.d/site.conf
 
-if [ -z "$(ls -A /path/to/dir)" ]; then
+if [ -z "$(ls -A ${ROOT_PATH})" ]; then
    echo "<?=phpinfo()?>" > "${ROOT_PATH}/index.php"
 fi
 
