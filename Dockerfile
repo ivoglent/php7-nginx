@@ -18,7 +18,7 @@ RUN apk add --no-cache \
 		tar \
 		xz \
 # https://github.com/docker-library/php/issues/494
-		openssl
+		openssl 
 
 # ensure www-data user exists
 RUN set -eux; \
@@ -180,7 +180,8 @@ RUN set -eux; \
 COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 
 # sodium was built as a shared module (so that it can be replaced later if so desired), so let's enable it too (https://github.com/docker-library/php/issues/598)
-RUN docker-php-ext-enable sodium
+RUN docker-php-ext-enable sodium && \
+	docker-php-ext-install pdo pdo_mysql mysqli
 
 ENTRYPOINT ["docker-php-entrypoint"]
 WORKDIR /var/www/html
@@ -222,6 +223,7 @@ RUN set -eux; \
 		echo '[www]'; \
 		echo 'listen = 9000'; \
 	} | tee php-fpm.d/zz-docker.conf
+
 
 # Override stop signal to stop process gracefully
 # https://github.com/php/php-src/blob/17baa87faddc2550def3ae7314236826bc1b1398/sapi/fpm/php-fpm.8.in#L163
