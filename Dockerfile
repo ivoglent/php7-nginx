@@ -1,4 +1,4 @@
-FROM nginx:1.19.2-alpine
+	FROM nginx:1.19.2-alpine
 
 ENV PHPIZE_DEPS \
 		autoconf \
@@ -225,6 +225,7 @@ RUN set -eux; \
 
 # Override stop signal to stop process gracefully
 # https://github.com/php/php-src/blob/17baa87faddc2550def3ae7314236826bc1b1398/sapi/fpm/php-fpm.8.in#L163
+COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./conf.d /etc/nginx/conf.d
 COPY ./bin/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
